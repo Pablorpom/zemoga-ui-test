@@ -1,5 +1,5 @@
 import Image from "next/image";
-import searchImage from "../public/search.svg";
+import searchImage from "../../public/search.svg";
 import styles from "./NavbarSearchButton.module.scss";
 
 export default function NavbarButton(props) {
