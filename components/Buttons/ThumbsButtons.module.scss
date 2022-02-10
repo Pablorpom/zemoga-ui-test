@@ -1,0 +1,47 @@
+@use "sass:map";
+@import "../../styles/palette.scss";
+
+.thumbButtonContainer {
+  height: 35px;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  @media (min-width: 1100px) {
+    height: 70px;
+  }
+}
+.thumbButton {
+  border: none;
+  width: 100%;
+  height: 100%;
+  @media (min-width: 1100px) {
+    height: 70px;
+  }
+}
+
+.thumbButton[aria-label="thumbs up"] {
+  background-color: rgba(map.get($palette, "--color-green-positive"), 0.8);
+}
+.thumbButton[aria-label="thumbs up"]:hover {
+  background-color: rgba(map.get($palette, "--color-green-positive"), 1);
+}
+.thumbButton[aria-label="thumbs down"] {
+  background-color: rgba(map.get($palette, "--color-yellow-negative"), 0.8);
+}
+.thumbButton[aria-label="thumbs down"]:hover {
+  background-color: rgba(map.get($palette, "--color-yellow-negative"), 1);
+}
+
+.imageContainer {
+  max-width: 20px;
+  margin-left: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (min-width: 1100px) {
+    margin-left: 0;
+    height: 100%;
+    max-width: 100%;
+  }
+}

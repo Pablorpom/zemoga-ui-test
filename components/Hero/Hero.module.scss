@@ -1,0 +1,23 @@
+@use "sass:map";
+@import "../../styles/palette.scss";
+
+.root {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  height: 90vh;
+}
+
+.imageContainer {
+  position: absolute;
+  top: 0;
+  width: 160vw;
+  left: -35vw;
+  height: 90vh;
+}
+.heroContainer {
+  position: relative;
+  width: 100vw;
+  height: 100%;
+}
