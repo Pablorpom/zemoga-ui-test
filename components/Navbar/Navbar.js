@@ -16,9 +16,9 @@ export default function Navbar() {
   return (
     <nav role="navigation">
       <div className={styles.root}>
+        <NavbarMenu isMenuClosed={isMenuClosed} />
         <h1>Rule of thumb.</h1>
         <NavbarButton onClick={onClick} />
-        <NavbarMenu isMenuClosed={isMenuClosed} />
       </div>
     </nav>
   );
