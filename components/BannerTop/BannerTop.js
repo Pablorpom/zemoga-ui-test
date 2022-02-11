@@ -9,8 +9,8 @@ export default function BannerTop() {
     }
   };
   const bannerClass = isBannerOpen
-    ? styles.root
-    : `${styles.root} ${styles.hide}`;
+    ? styles.bannerTop
+    : `${styles.bannerTop} ${styles.hide}`;
   return (
     <aside className={bannerClass} role="doc-tip" aria-label="Speak Out">
       <div className={styles.left}>

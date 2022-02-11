@@ -1,18 +1,13 @@
 @use "sass:map";
 @import "../../styles/palette.scss";
 
-.root {
-  position: relative;
-  top: -60px;
+.bannerTop {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem;
   background-color: map.get($palette, "--color-light-gray");
   margin-bottom: 0;
-  @media (min-width: 1100px) {
-    top: -90px;
-  }
 }
 .hide {
   display: none;
