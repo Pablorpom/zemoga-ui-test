@@ -1,0 +1,184 @@
+@use "sass:map";
+@import "../../styles/palette.scss";
+
+.container {
+  position: relative;
+  margin-right: 1rem;
+  height: 300px;
+  width: 300px;
+
+  .imageContainer {
+    z-index: -2;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 300px;
+    width: 300px;
+  }
+  .backgroundColor {
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  .featuredCard {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 300px;
+
+    .buttonsContainer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-left: 77px;
+      margin-right: 2rem;
+      margin-bottom: 12px;
+      max-height: 50px;
+      max-width: 200px;
+    }
+    h3 {
+      font-family: Lato;
+      font-weight: normal;
+      font-size: 30px;
+      align-items: flex-end;
+      color: map.get($palette, "--color-white");
+      margin-left: 2rem;
+      margin-top: 5.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .voteStatus {
+      position: absolute;
+      top: 96px;
+      left: 0px;
+      display: flex;
+      height: 30px;
+      width: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .voteStatusImageContainerThumbsUp {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 30px;
+        width: 30px;
+        background-color: rgba(map.get($palette, "--color-green-positive"), 1);
+      }
+      .voteStatusImageContainerThumbsDown {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 30px;
+        width: 30px;
+        background-color: rgba(map.get($palette, "--color-yellow-negative"), 1);
+      }
+      .hideStatus {
+        display: none;
+      }
+    }
+    .voteNowEyebrow {
+      position: absolute;
+      margin: 0;
+      top: 200px;
+      right: 40px;
+      font-family: Lato;
+      font-size: 10px;
+      color: map.get($palette, "--color-white");
+      z-index: 1;
+    }
+    .hideEyebrow {
+      display: none;
+    }
+
+    .description {
+      max-height: 35px;
+      max-width: 240px;
+      overflow-y: hidden;
+      font-family: Lato;
+      font-size: 15px;
+      line-height: 18px;
+      color: map.get($palette, "--color-white");
+      margin-left: 2rem;
+      margin-top: 0;
+    }
+
+    .lastUpdate {
+      font-family: Lato;
+      font-weight: bold;
+      font-size: 12px;
+      line-height: 14px;
+      color: map.get($palette, "--color-white");
+      margin-left: 7rem;
+      margin-top: 0;
+    }
+  }
+  .voteCount {
+    position: relative;
+    display: flex;
+    z-index: 2;
+    width: 100%;
+    max-height: 36px;
+    .percentageContainer {
+      position: absolute;
+      display: flex;
+      justify-content: space-between;
+      padding-left: 33px;
+      padding-right: 33px;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      h4 {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 22px;
+        color: map.get($palette, "--color-white");
+      }
+      .positivePercentage {
+        margin: 0;
+        z-index: 1;
+      }
+      .negativePercentage {
+        margin: 0;
+        z-index: 1;
+      }
+    }
+    .thumbsUp {
+      display: flex;
+      align-items: center;
+      padding-left: 12px;
+      height: 36px;
+      width: 25.5%;
+      background-color: rgba(60, 187, 180, 0.6);
+      .thumbsUpImageContainer {
+        height: 15px;
+        width: 15px;
+      }
+    }
+    .thumbsDown {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 12px;
+      height: 36px;
+      width: 74.5%;
+      background-color: rgba(249, 173, 29, 0.6);
+    }
+    .thumbsDownImageContainer {
+      height: 15px;
+      width: 15px;
+    }
+  }
+}
