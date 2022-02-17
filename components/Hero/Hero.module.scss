@@ -1,5 +1,6 @@
 @use "sass:map";
 @import "../../styles/palette.scss";
+@import "../../styles/responsive.scss";
 
 .root {
   position: relative;
@@ -8,7 +9,7 @@
   z-index: -1;
   height: 90vh;
   min-height: 450px;
-  @media (min-width: 1100px) {
+  @media (min-width: map.get($responsive, "large")) {
     min-height: 650px;
     top: -110px;
   }
@@ -20,7 +21,7 @@
   width: 100%;
   min-height: 450px;
   height: 90vh;
-  @media (min-width: 1100px) {
+  @media (min-width: map.get($responsive, "large")) {
     min-height: 650px;
   }
 }

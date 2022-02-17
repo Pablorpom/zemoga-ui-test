@@ -1,13 +1,14 @@
+import PropTypes from "prop-types";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "./CelebrityRow.module.scss";
-import picture from "../../public/kanye.png";
 import ThumbsButton from "../Buttons/ThumbsButtons";
 import thumbsUpImage from "../../public/thumbs-up.svg";
 import thumbsDownImage from "../../public/thumbs-down.svg";
 import VoteNowButton from "../Buttons/VoteNowButton";
+import { formatDistance, subDays } from "date-fns";
 
-export default function CelebrityRow() {
+export default function CelebrityRow(props) {
   const positive = 0;
   const negative = 0;
   const voteStatusClassName =
@@ -49,16 +50,30 @@ export default function CelebrityRow() {
     voteButtonText === "Vote Again"
       ? `${styles.voteNowEyebrow}`
       : `${styles.voteNowEyebrow} ${styles.hideEyebrow}`;
+
+  const date = formatDistance(
+    subDays(new Date(new Date(props.lastUpdated)), 3),
+    new Date(),
+    {
+      addSuffix: true,
+    }
+  );
+
   return (
     <div className={styles.container}>
       <div className={styles.backgroundColor}></div>
       <div className={styles.imageContainer}>
-        <Image src={picture} alt="Kanye West" width={500} height={500} />
+        <Image
+          src={`/${props.picture}`}
+          alt="Kanye West"
+          width={500}
+          height={500}
+        />
       </div>
       <div className={styles.featuredCard}>
         <div className={styles.cardListSections}>
           <div className={styles.leftSection}>
-            <h3>Kanye West</h3>
+            <h3>{props.name}</h3>
             <div className={styles.voteStatus}>
               <div className={styles.voteStatusImageContainerThumbsUp}>
                 <Image src={thumbsUpImage} alt="thumbs up" />
@@ -67,14 +82,12 @@ export default function CelebrityRow() {
                 <Image src={thumbsDownImage} alt="thumbs down" />
               </div>
             </div>
-            <p className={styles.description}>
-              Born in Atlanta and raised in Chicago, West was first known as a
-              producer for Roc-A-Fella Records in the early 2000s, producing
-              singles for several mainstream artists.
-            </p>
+            <p className={styles.description}>{props.description}</p>
           </div>
           <div className={styles.rightSection}>
-            <h5 className={styles.lastUpdate}>1 month ago in Enterteiment</h5>
+            <h5
+              className={styles.lastUpdate}
+            >{`${date} in ${props.category}`}</h5>
             <div className={styles.buttonsContainer}>
               <ThumbsButton small onClick={onThumbsButtonClick} />
               <VoteNowButton
@@ -106,3 +119,11 @@ export default function CelebrityRow() {
     </div>
   );
 }
+
+CelebrityRow.propTypes = {
+  name: PropTypes.string,
+  description: PropTypes.string,
+  category: PropTypes.string,
+  picture: PropTypes.string,
+  lastUpdated: PropTypes.string,
+};

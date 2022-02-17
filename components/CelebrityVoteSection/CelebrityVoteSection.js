@@ -1,18 +1,24 @@
+import PropTypes from "prop-types";
 import styles from "./CelebrityVoteSection.module.scss";
 import CelebrityCardsSection from "./CelebrityCardsSection";
 import CelebrityRowsSection from "./CelebrityRowsSection";
 import CelebrityCardRowDropDown from "../DropDowns/CelebrityCardRowDropDown";
 import { useEffect, useState } from "react";
 
-export default function CelebrityVoteSection() {
+export default function CelebrityVoteSection(props) {
+  const responsive = 798;
   const [dropDownDisplay, setDropDownDisplay] = useState("grid");
+  const setGridOnResize = () => {
+    if (window.innerWidth <= responsive) {
+      setDropDownDisplay("grid");
+    }
+  };
   useEffect(() => {
     setDropDownDisplay("grid");
-    window.addEventListener("resize", () => {
-      if (window.innerWidth < 768) {
-        setDropDownDisplay("grid");
-      }
-    });
+    window.addEventListener("resize", setGridOnResize);
+    return () => {
+      window.removeEventListener("resize", setGridOnResize);
+    };
   }, []);
   const onChange = (value) => {
     if (value === "grid") {
@@ -34,14 +40,18 @@ export default function CelebrityVoteSection() {
     <main role="main" className={styles.main}>
       <h2>Previous Rulings</h2>
       <div className={styles.dropDown}>
-        <CelebrityCardRowDropDown onChange={onChange} />
+        <CelebrityCardRowDropDown onChange={onChange} value={dropDownDisplay} />
       </div>
       <div className={hideCardSection}>
-        <CelebrityCardsSection />
+        <CelebrityCardsSection data={props.data} />
       </div>
       <div className={hideRowsSection}>
-        <CelebrityRowsSection />
+        <CelebrityRowsSection data={props.data} />
       </div>
     </main>
   );
 }
+
+CelebrityVoteSection.propTypes = {
+  data: PropTypes.array,
+};

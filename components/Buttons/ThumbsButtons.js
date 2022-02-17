@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import Image from "next/image";
 import thumbsUpImage from "../../public/thumbs-up.svg";
 import thumbsDownImage from "../../public/thumbs-down.svg";
@@ -51,3 +52,8 @@ export default function ThumbsButtons(props) {
     </div>
   );
 }
+
+ThumbsButtons.propTypes = {
+  small: PropTypes.bool,
+  onClick: PropTypes.func,
+};

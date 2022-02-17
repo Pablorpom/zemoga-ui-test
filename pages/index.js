@@ -11,9 +11,6 @@ import { promises as fs } from "fs";
 import path from "path";
 
 export default function Home(props) {
-  useEffect(() => {
-    console.log(props.data);
-  }, [props.data]);
   return (
     <>
       <Head>
@@ -27,7 +24,7 @@ export default function Home(props) {
         <Hero />
         <div className={styles.center}>
           <BannerTop />
-          <CelebrityVoteSection />
+          <CelebrityVoteSection data={props.data.data} />
           <BannerBottom />
           <Footer />
         </div>

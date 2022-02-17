@@ -1,0 +1,10 @@
+@use "sass:map";
+
+$responsive: (
+  "medium": 768px,
+  "large": 1100px,
+);
+
+@mixin use-responsive($size) {
+  min-width: map.get($responsive, $size);
+}

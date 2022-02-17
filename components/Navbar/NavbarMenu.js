@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import NavbarSearchButton from "./NavbarSearchButton";
 import styles from "./NavbarMenu.module.scss";
 import { useState } from "react";
@@ -40,3 +41,8 @@ export default function NavbarMenu(props) {
     </ul>
   );
 }
+
+NavbarMenu.propTypes = {
+  isMenuClosed: PropTypes.bool,
+  isInputClosed: PropTypes.bool,
+};

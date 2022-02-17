@@ -1,24 +1,24 @@
 @use "sass:map";
 @import "../../styles/palette.scss";
+@import "../../styles/responsive.scss";
 
 .root {
   display: flex;
   position: absolute;
   margin-top: 0px;
   width: 100vw;
-  height: 90vh;
+  height: 450px;
   flex-direction: column;
   align-items: center;
   background-color: black;
-  transition: height 0.3s;
-  @media (min-width: 1100px) {
+  @media (min-width: map.get($responsive, "large")) {
     flex-direction: row;
     background-color: black;
-    height: auto;
     justify-content: flex-end;
     align-items: center;
     padding-right: 5rem;
     z-index: 1;
+    height: auto;
     background-color: transparent;
   }
   li {
@@ -31,7 +31,7 @@
     line-height: 29px;
     margin-top: 3rem;
     color: map.get($palette, "--color-white");
-    @media (min-width: 1100px) {
+    @media (min-width: map.get($responsive, "large")) {
       font-size: 18px;
       margin-right: 1rem;
     }
@@ -39,7 +39,7 @@
   li:last-child {
     order: -1;
     margin-top: 7rem;
-    @media (min-width: 1100px) {
+    @media (min-width: map.get($responsive, "large")) {
       order: 1;
       margin-top: 2rem;
       margin-right: 5rem;
@@ -48,7 +48,7 @@
   form {
     display: flex;
     flex-direction: column;
-    @media (min-width: 1100px) {
+    @media (min-width: map.get($responsive, "large")) {
       flex-direction: row;
       align-items: baseline;
     }
@@ -58,7 +58,7 @@
 .hide {
   display: none;
 
-  @media (min-width: 1100px) {
+  @media (min-width: map.get($responsive, "large")) {
     height: auto;
     display: flex;
   }

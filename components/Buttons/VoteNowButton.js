@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import styles from "./VoteNowButton.module.scss";
 
 export default function VoteNowButton(props) {
@@ -12,3 +13,8 @@ export default function VoteNowButton(props) {
     </button>
   );
 }
+
+VoteNowButton.propTypes = {
+  isActive: PropTypes.bool,
+  onClick: PropTypes.func,
+};

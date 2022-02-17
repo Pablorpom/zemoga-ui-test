@@ -1,17 +1,34 @@
+import PropTypes from "prop-types";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "./CelebrityCard.module.scss";
-import picture from "../../public/kanye.png";
 import ThumbsButton from "../Buttons/ThumbsButtons";
 import thumbsUpImage from "../../public/thumbs-up.svg";
 import thumbsDownImage from "../../public/thumbs-down.svg";
 import VoteNowButton from "../Buttons/VoteNowButton";
+import { formatDistance, subDays } from "date-fns";
 
-export default function MainFeaturedCard() {
-  const positive = 0;
-  const negative = 0;
+export default function CelebrityCard(props) {
+  const [positiveVotes, setPositiveVotes] = useState(0);
+  const [negativeVotes, setNegativeVotes] = useState(0);
+
+  useEffect(async () => {
+    const data = await fetch(`/api/celebrities/${props.id}`);
+    const votes = await data.json();
+    setPositiveVotes(votes.positive);
+    setNegativeVotes(votes.negative);
+  }, [props.id]);
+  const negativePercentage = (
+    (negativeVotes * 100) /
+    (positiveVotes + negativeVotes)
+  ).toFixed(1);
+  const positivePercentage = (
+    (positiveVotes * 100) /
+    (positiveVotes + negativeVotes)
+  ).toFixed(1);
+
   const voteStatusClassName =
-    positive > negative
+    positiveVotes > negativeVotes
       ? `${styles.voteStatusImageContainerThumbsDown} ${styles.hideStatus}`
       : `${styles.voteStatusImageContainerThumbsDown}`;
   const [isThumbsButtonActive, setIsThumbsButtonActive] = useState("");
@@ -31,11 +48,21 @@ export default function MainFeaturedCard() {
       setIsThumbsButtonActive("down");
     }
   };
-  const onVoteButtonClick = () => {
+  const onVoteButtonClick = async () => {
     if (isThumbsButtonActive === "up") {
-      positive++;
+      const data = await fetch(`/api/celebrities/${props.id}`, {
+        method: "PUT",
+        body: JSON.stringify({ vote: "positive" }),
+      });
+      const positiveVote = await data.json();
+      setPositiveVotes(positiveVote.positive);
     } else if (isThumbsButtonActive === "down") {
-      negative++;
+      const data = await fetch(`/api/celebrities/${props.id}`, {
+        method: "PUT",
+        body: JSON.stringify({ vote: "negative" }),
+      });
+      const negativeVote = await data.json();
+      setPositiveVotes(negativeVote.positive);
     }
     if (voteButtonText === "Vote Now") {
       setVoteButtonText("Vote Again");
@@ -49,14 +76,27 @@ export default function MainFeaturedCard() {
     voteButtonText === "Vote Again"
       ? `${styles.voteNowEyebrow}`
       : `${styles.voteNowEyebrow} ${styles.hideEyebrow}`;
+
+  const date = formatDistance(
+    subDays(new Date(new Date(props.lastUpdated)), 3),
+    new Date(),
+    {
+      addSuffix: true,
+    }
+  );
   return (
     <div className={styles.container}>
       <div className={styles.backgroundColor}></div>
       <div className={styles.imageContainer}>
-        <Image src={picture} alt="Kanye West" width={500} height={500} />
+        <Image
+          src={`/${props.picture}`}
+          alt={props.name}
+          width={500}
+          height={500}
+        />
       </div>
       <div className={styles.featuredCard}>
-        <h3>Kanye West</h3>
+        <h3>{props.name}</h3>
         <div className={styles.voteStatus}>
           <div className={styles.voteStatusImageContainerThumbsUp}>
             <Image src={thumbsUpImage} alt="thumbs up" />
@@ -65,12 +105,8 @@ export default function MainFeaturedCard() {
             <Image src={thumbsDownImage} alt="thumbs down" />
           </div>
         </div>
-        <p className={styles.description}>
-          Born in Atlanta and raised in Chicago, West was first known as a
-          producer for Roc-A-Fella Records in the early 2000s, producing singles
-          for several mainstream artists.
-        </p>
-        <h5 className={styles.lastUpdate}>1 month ago in Enterteiment</h5>
+        <p className={styles.description}>{props.description}</p>
+        <h5 className={styles.lastUpdate}>{`${date} in ${props.category}`}</h5>
         <div className={styles.buttonsContainer}>
           <ThumbsButton small onClick={onThumbsButtonClick} />
           <VoteNowButton
@@ -81,16 +117,26 @@ export default function MainFeaturedCard() {
           <div className={eyebrowTextClassName}>Thanks for your vote!</div>
         </div>
         <div className={styles.voteCount}>
-          <div className={styles.thumbsUp}>
+          <div
+            className={styles.thumbsUp}
+            style={{ width: positivePercentage * 100 }}
+          >
             <div className={styles.thumbsUpImageContainer}>
               <Image src={thumbsUpImage} alt="thumbs up" />
             </div>
           </div>
           <div className={styles.percentageContainer}>
-            <h4 className={styles.positivePercentage}>25.5%</h4>
-            <h4 className={styles.negativePercentage}>74.5%</h4>
+            <h4
+              className={styles.positivePercentage}
+            >{`${positivePercentage}%`}</h4>
+            <h4
+              className={styles.negativePercentage}
+            >{`${negativePercentage}%`}</h4>
           </div>
-          <div className={styles.thumbsDown}>
+          <div
+            className={styles.thumbsDown}
+            style={{ width: negativePercentage * 100 }}
+          >
             <div className={styles.thumbsDownImageContainer}>
               <Image src={thumbsDownImage} alt="thumbs down" />
             </div>
@@ -100,3 +146,11 @@ export default function MainFeaturedCard() {
     </div>
   );
 }
+
+CelebrityCard.propTypes = {
+  name: PropTypes.string,
+  description: PropTypes.string,
+  category: PropTypes.string,
+  picture: PropTypes.string,
+  lastUpdated: PropTypes.string,
+};

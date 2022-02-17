@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import Image from "next/image";
 import searchImage from "../../public/search.svg";
 import styles from "./NavbarSearchButton.module.scss";
@@ -14,3 +15,7 @@ export default function NavbarButton(props) {
     </button>
   );
 }
+
+NavbarButton.propTypes = {
+  onClick: PropTypes.func,
+};

@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import styles from "./NavbarButton.module.scss";
 
 export default function NavbarButton(props) {
@@ -19,3 +20,7 @@ export default function NavbarButton(props) {
     </div>
   );
 }
+
+NavbarButton.propTypes = {
+  onClick: PropTypes.func,
+};

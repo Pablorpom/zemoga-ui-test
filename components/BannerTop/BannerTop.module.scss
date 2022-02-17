@@ -1,5 +1,6 @@
 @use "sass:map";
 @import "../../styles/palette.scss";
+@import "../../styles/responsive.scss";
 
 .bannerTop {
   display: flex;
@@ -57,7 +58,7 @@
   border: none;
   display: none;
   cursor: pointer;
-  @media (min-width: 1100px) {
+  @media (min-width: map.get($responsive, "medium")) {
     display: flex;
   }
 }

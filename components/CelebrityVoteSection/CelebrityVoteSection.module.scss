@@ -1,6 +1,9 @@
+@use "sass:map";
+@import "../../styles/responsive.scss";
+
 .main {
   position: relative;
-  @media (min-width: 768px) {
+  @media (min-width: map.get($responsive, "medium")) {
     min-width: 768px;
     flex-direction: column;
     display: flex;
@@ -17,7 +20,7 @@
   }
   .dropDown {
     display: none;
-    @media (min-width: 768px) {
+    @media (min-width: map.get($responsive, "medium")) {
       display: flex;
     }
   }

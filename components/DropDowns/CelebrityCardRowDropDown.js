@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import styles from "./CelebrityCardRowDropDown.module.scss";
 import { useRef } from "react";
 
@@ -5,7 +6,7 @@ export default function CelebrityCardRowDropDown(props) {
   const dropDownMenu = useRef();
   return (
     <select
-      value={"grid"}
+      value={props.value}
       ref={dropDownMenu}
       className={styles.dropDown}
       onChange={() => props.onChange(dropDownMenu.current.value)}
@@ -15,3 +16,7 @@ export default function CelebrityCardRowDropDown(props) {
     </select>
   );
 }
+
+CelebrityCardRowDropDown.propTypes = {
+  value: PropTypes.string,
+};
