@@ -8,7 +8,8 @@ export default function CelebrityRowsSection(props) {
       {props.data.map((celebrity) => {
         return (
           <CelebrityRow
-            key={celebrity.name}
+            key={celebrity.id}
+            id={celebrity.id}
             name={celebrity.name}
             description={celebrity.description}
             category={celebrity.category}

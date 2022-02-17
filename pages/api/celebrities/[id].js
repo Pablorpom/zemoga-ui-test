@@ -28,9 +28,10 @@ const celebritiesVotes = {
 export default function handler(req, res) {
   if (req.method === "PUT") {
     const { id } = req.query;
-    if (req.body.vote === "positive") {
+    const { vote } = JSON.parse(req.body);
+    if (vote === "positive") {
       celebritiesVotes[id].positive++;
-    } else if (req.body.vote === "negative") {
+    } else if (vote === "negative") {
       celebritiesVotes[id].negative++;
     }
     res.status(200).json(celebritiesVotes[id]);

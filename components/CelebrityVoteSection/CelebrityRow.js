@@ -9,10 +9,31 @@ import VoteNowButton from "../Buttons/VoteNowButton";
 import { formatDistance, subDays } from "date-fns";
 
 export default function CelebrityRow(props) {
-  const positive = 0;
-  const negative = 0;
+  const [positiveVotes, setPositiveVotes] = useState(0);
+  const [negativeVotes, setNegativeVotes] = useState(0);
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await fetch(`/api/celebrities/${props.id}`);
+      const votes = await data.json();
+      setPositiveVotes(votes.positive);
+      setNegativeVotes(votes.negative);
+    };
+    getData();
+  }, [props.id]);
+  const negativePercentage = (
+    (negativeVotes * 100) /
+    (positiveVotes + negativeVotes)
+  ).toFixed(1);
+  console.log(negativePercentage);
+  const positivePercentage = (
+    (positiveVotes * 100) /
+    (positiveVotes + negativeVotes)
+  ).toFixed(1);
+  console.log(positivePercentage);
+
   const voteStatusClassName =
-    positive > negative
+    positiveVotes > negativeVotes
       ? `${styles.voteStatusImageContainerThumbsDown} ${styles.hideStatus}`
       : `${styles.voteStatusImageContainerThumbsDown}`;
   const [isThumbsButtonActive, setIsThumbsButtonActive] = useState("");
@@ -32,11 +53,21 @@ export default function CelebrityRow(props) {
       setIsThumbsButtonActive("down");
     }
   };
-  const onVoteButtonClick = () => {
+  const onVoteButtonClick = async () => {
     if (isThumbsButtonActive === "up") {
-      positive++;
+      const data = await fetch(`/api/celebrities/${props.id}`, {
+        method: "PUT",
+        body: JSON.stringify({ vote: "positive" }),
+      });
+      const positiveVote = await data.json();
+      setPositiveVotes(positiveVote.positive);
     } else if (isThumbsButtonActive === "down") {
-      negative++;
+      const data = await fetch(`/api/celebrities/${props.id}`, {
+        method: "PUT",
+        body: JSON.stringify({ vote: "negative" }),
+      });
+      const negativeVote = await data.json();
+      setNegativeVotes(negativeVote.negative);
     }
     if (voteButtonText === "Vote Now") {
       setVoteButtonText("Vote Again");
@@ -100,16 +131,26 @@ export default function CelebrityRow(props) {
           </div>
         </div>
         <div className={styles.voteCount}>
-          <div className={styles.thumbsUp}>
+          <div
+            className={styles.thumbsUp}
+            style={{ width: `${positivePercentage}%` }}
+          >
             <div className={styles.thumbsUpImageContainer}>
               <Image src={thumbsUpImage} alt="thumbs up" />
             </div>
           </div>
           <div className={styles.percentageContainer}>
-            <h4 className={styles.positivePercentage}>25.5%</h4>
-            <h4 className={styles.negativePercentage}>74.5%</h4>
+            <h4
+              className={styles.positivePercentage}
+            >{`${positivePercentage}%`}</h4>
+            <h4
+              className={styles.negativePercentage}
+            >{`${negativePercentage}%`}</h4>
           </div>
-          <div className={styles.thumbsDown}>
+          <div
+            className={styles.thumbsDown}
+            style={{ width: `${negativePercentage}%` }}
+          >
             <div className={styles.thumbsDownImageContainer}>
               <Image src={thumbsDownImage} alt="thumbs down" />
             </div>

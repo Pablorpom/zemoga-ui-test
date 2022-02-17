@@ -12,11 +12,14 @@ export default function CelebrityCard(props) {
   const [positiveVotes, setPositiveVotes] = useState(0);
   const [negativeVotes, setNegativeVotes] = useState(0);
 
-  useEffect(async () => {
-    const data = await fetch(`/api/celebrities/${props.id}`);
-    const votes = await data.json();
-    setPositiveVotes(votes.positive);
-    setNegativeVotes(votes.negative);
+  useEffect(() => {
+    const getData = async () => {
+      const data = await fetch(`/api/celebrities/${props.id}`);
+      const votes = await data.json();
+      setPositiveVotes(votes.positive);
+      setNegativeVotes(votes.negative);
+    };
+    getData();
   }, [props.id]);
   const negativePercentage = (
     (negativeVotes * 100) /
@@ -62,7 +65,7 @@ export default function CelebrityCard(props) {
         body: JSON.stringify({ vote: "negative" }),
       });
       const negativeVote = await data.json();
-      setPositiveVotes(negativeVote.positive);
+      setNegativeVotes(negativeVote.negative);
     }
     if (voteButtonText === "Vote Now") {
       setVoteButtonText("Vote Again");
@@ -119,7 +122,7 @@ export default function CelebrityCard(props) {
         <div className={styles.voteCount}>
           <div
             className={styles.thumbsUp}
-            style={{ width: positivePercentage * 100 }}
+            style={{ width: `${positivePercentage}%` }}
           >
             <div className={styles.thumbsUpImageContainer}>
               <Image src={thumbsUpImage} alt="thumbs up" />
@@ -135,7 +138,7 @@ export default function CelebrityCard(props) {
           </div>
           <div
             className={styles.thumbsDown}
-            style={{ width: negativePercentage * 100 }}
+            style={{ width: `${negativePercentage}%` }}
           >
             <div className={styles.thumbsDownImageContainer}>
               <Image src={thumbsDownImage} alt="thumbs down" />

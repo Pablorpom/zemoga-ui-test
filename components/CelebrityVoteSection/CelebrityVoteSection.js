@@ -6,7 +6,7 @@ import CelebrityCardRowDropDown from "../DropDowns/CelebrityCardRowDropDown";
 import { useEffect, useState } from "react";
 
 export default function CelebrityVoteSection(props) {
-  const responsive = 798;
+  const responsive = 768;
   const [dropDownDisplay, setDropDownDisplay] = useState("grid");
   const setGridOnResize = () => {
     if (window.innerWidth <= responsive) {
