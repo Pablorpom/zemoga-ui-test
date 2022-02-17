@@ -25,12 +25,10 @@ export default function CelebrityRow(props) {
     (negativeVotes * 100) /
     (positiveVotes + negativeVotes)
   ).toFixed(1);
-  console.log(negativePercentage);
   const positivePercentage = (
     (positiveVotes * 100) /
     (positiveVotes + negativeVotes)
   ).toFixed(1);
-  console.log(positivePercentage);
 
   const voteStatusClassName =
     positiveVotes > negativeVotes

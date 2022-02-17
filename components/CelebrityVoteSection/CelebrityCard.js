@@ -88,7 +88,7 @@ export default function CelebrityCard(props) {
     }
   );
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-testid={"Celebrity card"}>
       <div className={styles.backgroundColor}></div>
       <div className={styles.imageContainer}>
         <Image
@@ -113,11 +113,14 @@ export default function CelebrityCard(props) {
         <div className={styles.buttonsContainer}>
           <ThumbsButton small onClick={onThumbsButtonClick} />
           <VoteNowButton
+            data-testid={"voteButton"}
             onClick={onVoteButtonClick}
             isActive={isVoteButtonActive}
             buttonText={voteButtonText}
           />
-          <div className={eyebrowTextClassName}>Thanks for your vote!</div>
+          <div className={eyebrowTextClassName} data-testid={"eyebrow"}>
+            Thanks for your vote!
+          </div>
         </div>
         <div className={styles.voteCount}>
           <div

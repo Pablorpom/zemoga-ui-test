@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import Image from "next/image";
-import thumbsUpImage from "../../public/thumbs-up.svg";
-import thumbsDownImage from "../../public/thumbs-down.svg";
+import thumbsUpImage from "/public/thumbs-up.svg";
+import thumbsDownImage from "/public/thumbs-down.svg";
 import styles from "./ThumbsButtons.module.scss";
 
 export default function ThumbsButtons(props) {
@@ -18,6 +18,7 @@ export default function ThumbsButtons(props) {
   return (
     <div className={mainContainerClassName}>
       <button
+        data-testid={"positive button"}
         className={thumbButtonClassName}
         aria-label="thumbs up"
         onClick={() => props.onClick("up")}
@@ -34,6 +35,7 @@ export default function ThumbsButtons(props) {
         </div>
       </button>
       <button
+        data-testid={"negative button"}
         className={thumbButtonClassName}
         aria-label="thumbs down"
         onClick={() => props.onClick("down")}

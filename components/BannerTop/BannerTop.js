@@ -12,7 +12,12 @@ export default function BannerTop() {
     ? styles.bannerTop
     : `${styles.bannerTop} ${styles.hide}`;
   return (
-    <aside className={bannerClass} role="doc-tip" aria-label="Speak Out">
+    <aside
+      data-testid={"banner top"}
+      className={bannerClass}
+      role="doc-tip"
+      aria-label="Speak Out"
+    >
       <div className={styles.left}>
         <span className={styles.hairline}>Speak out. Be heard.</span>
         <span className={styles.baseline}>Be counted</span>
@@ -25,6 +30,7 @@ export default function BannerTop() {
         </p>
       </div>
       <button
+        data-testid={"banner top button"}
         onClick={onClick}
         aria-label="close"
         className={styles.closeButton}
